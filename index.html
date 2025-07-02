@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS ROI Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SaaS ROI Calculator</h1>
+            <p>Calculate your 5-year return on investment with detailed metrics</p>
+        </header>
+
+        <div class="calculator-grid">
+            <!-- Benefits Section -->
+            <section class="card benefits-section">
+                <h2>Benefits - Your 3 Big Rocks</h2>
+                
+                <div class="big-rock" id="rock1">
+                    <h3>Big Rock #1: Process Efficiency</h3>
+                    <div class="rock-description">
+                        <label>Description:</label>
+                        <textarea id="rock1-description" placeholder="Describe this benefit area (e.g., automated reporting reduces manual data entry time...)"></textarea>
+                    </div>
+                    <div class="rock-inputs">
+                        <div class="input-group">
+                            <label>Number of People Affected:</label>
+                            <input type="number" id="rock1-people" value="50" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Hours Saved per Person per Week:</label>
+                            <input type="number" id="rock1-hours" value="2" min="0" step="0.5">
+                        </div>
+                        <div class="input-group">
+                            <label>Hourly Rate (with overhead):</label>
+                            <input type="number" id="rock1-rate" value="50" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Improvement Percentage:</label>
+                            <input type="range" id="rock1-improvement" value="80" min="0" max="100">
+                            <span class="slider-value">80%</span>
+                        </div>
+                        <div class="benefit-result">
+                            Annual Benefit: <span id="rock1-benefit">$208,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="big-rock" id="rock2">
+                    <h3>Big Rock #2: Cost Reduction</h3>
+                    <div class="rock-description">
+                        <label>Description:</label>
+                        <textarea id="rock2-description" placeholder="Describe this benefit area (e.g., reduced error rates lower rework costs...)"></textarea>
+                    </div>
+                    <div class="rock-inputs">
+                        <div class="input-group">
+                            <label>Number of People Affected:</label>
+                            <input type="number" id="rock2-people" value="25" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Hours Saved per Person per Week:</label>
+                            <input type="number" id="rock2-hours" value="3" min="0" step="0.5">
+                        </div>
+                        <div class="input-group">
+                            <label>Hourly Rate (with overhead):</label>
+                            <input type="number" id="rock2-rate" value="75" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Improvement Percentage:</label>
+                            <input type="range" id="rock2-improvement" value="60" min="0" max="100">
+                            <span class="slider-value">60%</span>
+                        </div>
+                        <div class="benefit-result">
+                            Annual Benefit: <span id="rock2-benefit">$175,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="big-rock" id="rock3">
+                    <h3>Big Rock #3: Revenue Growth</h3>
+                    <div class="rock-description">
+                        <label>Description:</label>
+                        <textarea id="rock3-description" placeholder="Describe this benefit area (e.g., faster quote generation increases sales velocity...)"></textarea>
+                    </div>
+                    <div class="rock-inputs">
+                        <div class="input-group">
+                            <label>Current Projects/Products per Year:</label>
+                            <input type="number" id="rock3-people" value="50" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label>Average Revenue per Project/Product:</label>
+                            <input type="number" id="rock3-hours" value="25000" min="0" step="1000">
+                        </div>
+                        <div class="input-group">
+                            <label>Percentage Increase in Projects/Products:</label>
+                            <input type="range" id="rock3-improvement" value="20" min="0" max="100">
+                            <span class="slider-value">20%</span>
+                        </div>
+                        <div class="project-summary">
+                            <div class="project-count">
+                                Additional Projects/Products: <span id="rock3-additional-count">10</span>
+                            </div>
+                            <div class="benefit-result">
+                                Annual Benefit: <span id="rock3-benefit">$250,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-benefits">
+                    <strong>Total Annual Benefits: <span id="total-benefits">$565,500</span></strong>
+                </div>
+            </section>
+
+            <!-- Investment Section -->
+            <section class="card investment-section">
+                <h2>Investment Breakdown</h2>
+                
+                <div class="investment-category">
+                    <h3>Software Costs</h3>
+                    <div class="year-inputs">
+                        <div class="input-group">
+                            <label>Year 1:</label>
+                            <input type="number" id="software-y1" value="120000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 2:</label>
+                            <input type="number" id="software-y2" value="150000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 3:</label>
+                            <input type="number" id="software-y3" value="150000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 4:</label>
+                            <input type="number" id="software-y4" value="180000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 5:</label>
+                            <input type="number" id="software-y5" value="180000" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="investment-category">
+                    <h3>Training Costs</h3>
+                    <div class="year-inputs">
+                        <div class="input-group">
+                            <label>Year 1:</label>
+                            <input type="number" id="training-y1" value="50000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 2:</label>
+                            <input type="number" id="training-y2" value="25000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 3:</label>
+                            <input type="number" id="training-y3" value="25000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 4:</label>
+                            <input type="number" id="training-y4" value="30000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 5:</label>
+                            <input type="number" id="training-y5" value="30000" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="investment-category">
+                    <h3>Implementation Costs</h3>
+                    <div class="year-inputs">
+                        <div class="input-group">
+                            <label>Year 1:</label>
+                            <input type="number" id="implementation-y1" value="80000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 2:</label>
+                            <input type="number" id="implementation-y2" value="20000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 3:</label>
+                            <input type="number" id="implementation-y3" value="10000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 4:</label>
+                            <input type="number" id="implementation-y4" value="15000" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Year 5:</label>
+                            <input type="number" id="implementation-y5" value="15000" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-investment">
+                    <strong>Total 5-Year Investment: <span id="total-investment">$1,000,000</span></strong>
+                </div>
+            </section>
+
+            <!-- Assumptions Section -->
+            <section class="card assumptions-section">
+                <h2>Assumptions</h2>
+                
+                <div class="input-group">
+                    <label>Discount Rate (for NPV):</label>
+                    <input type="number" id="discount-rate" value="10" min="1" max="20" step="0.5">
+                    <span>%</span>
+                </div>
+
+                <div class="input-group">
+                    <label>Annual Benefit Growth Rate:</label>
+                    <input type="number" id="growth-rate" value="3" min="0" max="10" step="0.5">
+                    <span>%</span>
+                </div>
+
+                <div class="ramp-up-section">
+                    <h3>Ramp-up Curve</h3>
+                    <div class="ramp-inputs">
+                        <div class="input-group">
+                            <label>Year 1 Adoption:</label>
+                            <input type="range" id="ramp-y1" value="25" min="0" max="100">
+                            <span class="slider-value">25%</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Year 2 Adoption:</label>
+                            <input type="range" id="ramp-y2" value="50" min="0" max="100">
+                            <span class="slider-value">50%</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Year 3 Adoption:</label>
+                            <input type="range" id="ramp-y3" value="75" min="0" max="100">
+                            <span class="slider-value">75%</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Year 4 Adoption:</label>
+                            <input type="range" id="ramp-y4" value="90" min="0" max="100">
+                            <span class="slider-value">90%</span>
+                        </div>
+                        <div class="input-group">
+                            <label>Year 5 Adoption:</label>
+                            <input type="range" id="ramp-y5" value="100" min="0" max="100">
+                            <span class="slider-value">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Results Section -->
+        <section class="card results-section">
+            <h2>ROI Analysis Results</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>5-Year ROI</h3>
+                    <div class="metric-value" id="roi-percentage">156%</div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Payback Period</h3>
+                    <div class="metric-value" id="payback-period">2.8 years</div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Net Present Value</h3>
+                    <div class="metric-value" id="npv">$1,245,000</div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Internal Rate of Return</h3>
+                    <div class="metric-value" id="irr">42%</div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Cost of Inaction (5yr)</h3>
+                    <div class="metric-value" id="cost-inaction">$2,827,500</div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>3-Month Delay Cost</h3>
+                    <div class="metric-value" id="delay-cost">$141,375</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="card charts-section">
+            <h2>Visual Analysis</h2>
+            
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Cumulative Cash Flow</h3>
+                    <canvas id="cashFlowChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Annual Benefits vs Costs</h3>
+                    <canvas id="annualChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Export Section -->
+        <section class="card export-section">
+            <h2>Export Results</h2>
+            <div class="export-buttons">
+                <button id="print-pdf" class="btn-primary">Generate PDF Report</button>
+                <button id="save-calculation" class="btn-secondary">Save Calculation</button>
+                <button id="load-calculation" class="btn-secondary">Load Calculation</button>
+            </div>
+        </section>
+
+        <!-- Hidden PDF Content -->
+        <div id="pdf-content" class="pdf-only">
+            <div class="pdf-header">
+                <h1>SaaS ROI Analysis Report</h1>
+                <p class="pdf-date"></p>
+            </div>
+            
+            <div class="pdf-summary">
+                <div class="pdf-metric">
+                    <span class="pdf-label">5-Year ROI:</span>
+                    <span class="pdf-value" id="pdf-roi"></span>
+                </div>
+                <div class="pdf-metric">
+                    <span class="pdf-label">Payback Period:</span>
+                    <span class="pdf-value" id="pdf-payback"></span>
+                </div>
+                <div class="pdf-metric">
+                    <span class="pdf-label">Net Present Value:</span>
+                    <span class="pdf-value" id="pdf-npv"></span>
+                </div>
+                <div class="pdf-metric">
+                    <span class="pdf-label">IRR:</span>
+                    <span class="pdf-value" id="pdf-irr"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="file-input" accept=".json" style="display: none;">
+
+    <script src="calculator.js"></script>
+</body>
+</html> 
